@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mj.lrp.dao.UserDao" >
+    <resultMap id="BaseResultMap" type="com.mj.lrp.model.User" >
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="vip" property="vip" jdbcType="TIMESTAMP" />
+        <result column="vip_type" property="vipType" jdbcType="INTEGER" />
+        <result column="devices" property="devices" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        user_id, username, password, email, create_time, vip, vip_type, devices
+    </sql>
+    <select id="getUserByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where binary user_id = #{userId}
+    </select>
+    <select id="getUserByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where binary username = #{username}
+    </select>
+    <select id="getUserByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where email = #{email}
+    </select>
+    <select id="getUserByUsernameAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where binary username = #{username}
+        and binary password = #{password}
+    </select>
+    <select id="getUserByEmailAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where binary email = #{email}
+        and binary password = #{password}
+    </select>
+    <select id="getUserByInvitationCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_user
+        where binary invitation_code = #{invitationCode}
+    </select>
+    <insert id="insert" parameterType="com.mj.lrp.model.User" >
+        insert into lrp_user (user_id, username, password, email, create_time, vip, vip_type, devices)
+        values (#{userId}, #{username}, #{password}, #{email}, #{createTime}, #{vip}, #{vipType}, #{devices})
+    </insert>
+    <update id="update" parameterType="com.mj.lrp.model.User" >
+        update lrp_user
+        <set>
+            username = #{username},
+            password = #{password},
+            email = #{email},
+            create_time = #{createTime},
+            vip = #{vip},
+            vip_type = #{vipType},
+            devices = #{devices}
+        </set>
+        where user_id = #{userId}
+    </update>
+    <delete id="deleteByUserId" parameterType="java.lang.Integer" >
+        delete from lrp_user
+        where user_id = #{userId}
+    </delete>
+    <insert id="insertSelective" parameterType="com.mj.lrp.model.User" >
+        insert into lrp_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+            *
+        from lrp_user
+    </select>
+</mapper>

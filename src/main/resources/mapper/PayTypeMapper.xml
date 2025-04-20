@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mj.lrp.dao.PayTypeDao" >
+    <resultMap id="BaseResultMap" type="com.mj.lrp.model.PayType" >
+        <id column="pay_type" property="payType" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="VARCHAR" />
+        <result column="humanized_vip" property="humanizedVip" jdbcType="VARCHAR" />
+        <result column="vip" property="vip" jdbcType="VARCHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        pay_type, price, humanized_vip, vip, image, description
+    </sql>
+    <select id="getByPayType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_pay_type
+        where binary pay_type = #{payType}
+    </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+            *
+        from lrp_pay_type
+    </select>
+    <insert id="insert" parameterType="com.mj.lrp.model.PayType" >
+        insert into lrp_pay_type (pay_type, price, humanized_vip, vip, image, description)
+        values (#{payType}, #{price}, #{humanized_vip}, #{vip}, #{image}, #{description})
+    </insert>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from lrp_pay_type
+        where pay_type = #{payType}
+    </delete>
+</mapper>

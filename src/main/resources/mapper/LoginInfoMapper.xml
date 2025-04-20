@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mj.lrp.dao.LoginInfoDao" >
+    <resultMap id="BaseResultMap" type="com.mj.lrp.model.LoginInfo" >
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+        <result column="device" property="device" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        user_id, username, last_time, location, device, version
+    </sql>
+    <select id="getByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lrp_login_info
+        where binary user_id = #{userId}
+    </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+            *
+        from lrp_login_info
+    </select>
+    <insert id="insert" parameterType="com.mj.lrp.model.LoginInfo" >
+        insert into lrp_login_info (user_id, username, last_time, location, device, version)
+        values (#{userId}, #{username}, #{lastTime}, #{location}, #{device}, #{version})
+    </insert>
+    <update id="update" parameterType="com.mj.lrp.model.LoginInfo" >
+        update lrp_login_info
+        <set>
+            username = #{username},
+            last_time = #{lastTime},
+            location = #{location},
+            device = #{device},
+            version = #{version}
+        </set>
+        where user_id = #{userId}
+    </update>
+    <delete id="delete" parameterType="java.lang.String" >
+        delete from lrp_login_info
+        where user_id = #{userId}
+    </delete>
+    <delete id="deleteAll" >
+        delete from lrp_login_info
+    </delete>
+</mapper>
