@@ -3,9 +3,20 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="LeapRemote-Premium-Server" />
+        <module name="RemoteController-Server" />
+        <module name="LeapRemote-Prime-Server" />
+        <module name="LeapRemote-Server" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="RemoteController-Server" target="8" />
-    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="RemoteController-Server" options="-parameters" />
+    </option>
   </component>
 </project>
